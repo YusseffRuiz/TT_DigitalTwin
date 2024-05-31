@@ -7,6 +7,7 @@ import deprl
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
+import pandas as pd
 
 import cv2
 import os
@@ -72,17 +73,24 @@ def plotMuscle(muscle, muscleName, colorValue, nSteps):
         print("Not enough Data, please repeat the experiment")
         return True
     else:
-        muscleData = muscle[nInit:nEnd]
+        muscleData = muscle
         plt.plot(muscleData, label=muscleName, color=colorValue)
         plt.xlabel("Timesteps")
         plt.ylabel("Torque")
         plotName = "muscle " + muscleName + " force standing"
         plt.title(plotName)
         plt.legend()
+        plt.xlim(nInit, nEnd)
         plt.show()
 
 
-def plotJoint(joint, jointName, colorValue, nSteps):
+def mujocoToDegrees(valuesList):
+    degreesList = []
+    for i in valuesList:
+        degreesList.append(i/0.015)
+    return degreesList
+
+def plotJoint(joint, jointName, colorValue, nSteps, limInf=45, limSup=45):
     # colorValue = blue, yellow, red, green
     nInit = 100
     nEnd = nInit + nSteps
@@ -90,13 +98,15 @@ def plotJoint(joint, jointName, colorValue, nSteps):
         print("Not enough Data, please repeat the experiment")
         return True
     else:
-        jointData = joint[nInit:nEnd]
-        plt.plot(jointData, label=jointName, color=colorValue)
+        #jointData = mujocoToDegrees(joint)
+        plt.plot(joint, label=jointName, color=colorValue)
         plt.xlabel("Timesteps")
         plt.ylabel("Angle")
         plotName = jointName + " angle standing"
         plt.title(plotName)
         plt.legend()
+        plt.xlim(nInit,nEnd)
+        plt.ylim(limInf, limSup)
         plt.show()
 
 
@@ -108,9 +118,12 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
         gastroc_l = []
         vast_lat_l = []
         bflh_l = []
-        hip_flexion = []
-        plantar_flexion = []
-        knee_flexion = []
+        r_hip_flexion = []
+        r_plantar_flexion = []
+        r_knee_flexion = []
+        l_hip_flexion = []
+        l_plantar_flexion = []
+        l_knee_flexion = []
 
     obs = env.reset()
 
@@ -129,11 +142,14 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
             vast_lat_r.append(muscles[38])
             bflh_r.append(muscles[6])
             gastroc_l.append(muscles[49])
-            vast_lat_l.append(muscles[69])
+            #vast_lat_l.append(muscles[69])
             bflh_l.append(muscles[46])
-            hip_flexion.append(position[7])
-            plantar_flexion.append(position[10])
-            knee_flexion.append(position[11])
+            r_hip_flexion.append(position[7])
+            r_knee_flexion.append(position[10])
+            r_plantar_flexion.append(position[12])
+            l_hip_flexion.append(position[15])
+            l_knee_flexion.append(position[18])
+            # l_plantar_flexion.append(position[12]) # When Ankle movement exist, with Active TP
             # motor_action.append(action[])
         next_state, reward, done, info = env.step(action)
         obs = next_state
@@ -141,7 +157,7 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
     env.close()
     if plotFlag:
         muscles = [gastroc_r, vast_lat_r, bflh_r, gastroc_l, vast_lat_l, bflh_l]
-        joints = [hip_flexion, plantar_flexion, knee_flexion]
+        joints = [r_hip_flexion, r_knee_flexion, r_plantar_flexion, l_hip_flexion, l_knee_flexion, l_plantar_flexion]
         return muscles, joints
 
 
@@ -149,9 +165,12 @@ def multipleRun(env, visual, plotFlag, randAction, policy, totEpisodes):
     if plotFlag:
         gastroc_r = []
         soleus_r = []
-        hip_flexion = []
-        plantar_flexion = []
-        knee_flexion = []
+        r_hip_flexion = []
+        r_plantar_flexion = []
+        r_knee_flexion = []
+        l_hip_flexion = []
+        l_plantar_flexion = []
+        l_knee_flexion = []
 
     obs = env.reset()
 
@@ -172,9 +191,12 @@ def multipleRun(env, visual, plotFlag, randAction, policy, totEpisodes):
                 position = env.sim.data.qpos.tolist()
                 gastroc_r.append(muscles[13])
                 soleus_r.append(muscles[33])
-                hip_flexion.append(position[7])
-                plantar_flexion.append(position[10])
-                knee_flexion.append(position[11])
+                r_hip_flexion.append(position[7])
+                r_knee_flexion.append(position[10])
+                r_plantar_flexion.append(position[12])
+                l_hip_flexion.append(position[15])
+                l_knee_flexion.append(position[18])
+                # l_plantar_flexion.append(position[12]) # When Ankle movement exist, with Active TP
                 # motor_action.append(action[])
             next_state, reward, done, info = env.step(action)
             obs = next_state
@@ -211,16 +233,29 @@ def main(env_string, foldername, visual, randAction, plotFlag, sarcFlag, samples
     if testFlag:
         if plotFlag:
             muscles, joints = oneRun(env, visual, plotFlag, randAction, policy, T)
+            jointTable = joints
+            for i in range(0,5):
+                jointTable[i] = mujocoToDegrees(joints[i])
 
+            #jointTable = [np.transpose(joints[0]), np.transpose(joints[1]), np.transpose(joints[2]), np.transpose(joints[3]), np.transpose(joints[4]), np.transpose(joints[5])]
+            #jointTable = [joints[0], joints[1], joints[2], joints[3], joints[4], joints[5]]
+
+            DF = pd.DataFrame(data = jointTable, index = ["right hip flexion", "right knee flexion", "right ankle flexion", "left hip flexion", "left knee flexion", "left ankle flexion"])
+            DF = DF.transpose()
+            DF.to_csv("WalkingChallenge\helper\joints.csv")
+
+            failed = plotJoint(jointTable[2], "plantar flexion", "blue", samples)
             plotMuscle(muscles[0], "gastrocnemous medial right", "blue", samples)
             plotMuscle(muscles[1], "vastus lateralis right", "red", samples)
             plotMuscle(muscles[2], "bicep femoral long head right", "green", samples)
             plotMuscle(muscles[3], "gastrocnemous medial left", "blue", samples)
             plotMuscle(muscles[4], "vastus lateralis left", "red", samples)
             plotMuscle(muscles[5], "bicep femoral long head left", "green", samples)
-            plotJoint(joints[0], "hip flexion", "blue", samples)
-            plotJoint(joints[1], "knee flexion", "blue", samples)
-            failed = plotJoint(joints[2], "plantar flexion", "blue", samples)
+            plotJoint(jointTable[0], "right hip flexion", "blue", samples, limInf=-15, limSup=125)
+            plotJoint(jointTable[1], "right knee flexion", "blue", samples, limInf=-5, limSup=150)
+            plotJoint(jointTable[2], "right ankle flexion", "blue", samples, limInf=-55, limSup=35)
+            plotJoint(jointTable[3], "left hip flexion", "blue", samples, limInf=-15, limSup=125)
+            plotJoint(jointTable[4], "left knee flexion", "blue", samples, limInf=-5, limSup=150)
 
         else:
             oneRun(env, visual, plotFlag, randAction, policy, T)
@@ -237,7 +272,7 @@ def main(env_string, foldername, visual, randAction, plotFlag, sarcFlag, samples
 
 if __name__ == '__main__':
 
-    healthy_foldername = "baselines_DEPRL\myoLegWalk_20230514\myoLeg\\"
+    healthy_foldername = "WalkingChallenge\myoLegWalk_20230514\\myoleg\\"
     amp_foldername = "baselines_DEPRL\myo_amputation_1\\"
 
     env_hand = 'HandReach-v1'
@@ -251,8 +286,11 @@ if __name__ == '__main__':
     #### Artificial Limb walk 71 actions (70 muscles, 1 motor), 20 DoF.
     env_amp_2DoF = 'myoAmpWalk-v0'
     env_amp_1DoF = 'myoAmp1DoFWalk-v0'
+    env_amp_Passive = 'myoAmpPassiveWalk-v0'
+    env_amp_Passive_Stand = 'myoAmpPassiveStand-v0'
     env_amp_challenge = 'myoChallengeAmputeeWalk-v1'
-    env_amp_stand = 'myoAmp1DoFStand-v0'
+    env_amp_stand = 'myoAmp1DoFStand-v0'  ### Working
+
 
     ################################
     ######Selection Begins##########
@@ -262,13 +300,13 @@ if __name__ == '__main__':
 
     gymnasiumFlag = False
     verifyModel = False  # flag to analyse model characteristics, no simulation performed
-    namesFlag = True
+    namesFlag = True # To print names of muscles and DoF
     visual = True  # Visual mujoco representation
 
     # Action to be performed and plot of the muscles and joints
 
-    randAction = False  # Just for testing random movements
-    plotFlag = False  # Enable if we want plots of muscles and joint movement
+    randAction = False  # Just for testing random movements. if true, loads a Checkpoint
+    plotFlag = True  # Enable if we want plots of muscles and joint movements
     sarcFlag = False  # Sarcopenia on the model enabled or not
 
     # Behaviour of the simulation #### only one movement for a long time testFlag = True
@@ -276,8 +314,8 @@ if __name__ == '__main__':
     testFlag = True  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
     samples = 300  # how many samples do we want to get from the plots, if plotFlag is active
     totEpisodes = 5
-    timeRunning = 1000  # How many seconds simulation run if using testFlag = True
-    #
+    timeRunning = 500  # How many seconds simulation run if using testFlag = True
+
     if gymnasiumFlag:
         import gymnasium as gym
     else:
@@ -286,13 +324,16 @@ if __name__ == '__main__':
     if env_string == 'myoAmpWalk-v0' or env_string == 'myoChallengeAmputeeWalk-v0':
         foldername = amp_foldername
     elif env_string == 'myoAmp1DoFWalk-v0':
-        foldername = "WalkingChallenge\myoAmp_walking_1\\"
+        foldername = "WalkingChallenge\myoAmp_walking_2\\"
     elif env_string == 'myoAmp1DoFStand-v0':
-        foldername = "myoAmp_walking\\"
+        foldername = "WalkingChallenge\myoAmp_Stand\\"
+    elif env_string == "myoAmpPassiveWalk-v0":
+        foldername = "WalkingChallenge\myoAmp_passive_walking\\"
+    elif env_string == "myoAmpPassiveStand-v0":
+        foldername = "WalkingChallenge\myoAmp_Passive_Stand\\"
     else:
         foldername = healthy_foldername
 
-    # 34 DoF 78 actions and muscles
     if verifyModel:
         env = gym.make(env_string)
         modelCharacteristics(env, importGymnasium=gymnasiumFlag, getNames=namesFlag)

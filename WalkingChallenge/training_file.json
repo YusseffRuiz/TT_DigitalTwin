@@ -10,14 +10,14 @@
     "parallel": 8,
     "sequential": 8,
     "seed": 0,
-    "name": "myoAmp_walking_2",
+    "name": "myoAmp_Walking_3",
     "environment_name": "myoAmp",
     "checkpoint": "last",
     "path": ""
   },
   "working_dir": "WalkingChallenge",
   "id": 0,
-  "mpo_args":{"hidden_size":1024, "lr_actor": 3.68e-5, "lr_critic": 7.05e-5, "lr_dual": 0.00213},
+  "mpo_args":{"hidden_size":1024, "lr_actor": 3.68e-4, "lr_critic": 7.05e-4, "lr_dual": 0.00563},
   "env_args":{},
   "DEP":{
     "test_episode_every": 3,
