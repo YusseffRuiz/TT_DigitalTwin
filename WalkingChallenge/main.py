@@ -312,7 +312,7 @@ if __name__ == '__main__':
     # totEpisodes movements: testFlag = False
     testFlag = False  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
     samples = 300  # how many samples do we want to get from the plots, if plotFlag is active
-    totEpisodes = 10
+    totEpisodes = 5
     timeRunning = 1000  # How many seconds simulation run if using testFlag = True
 
     if gymnasiumFlag:
