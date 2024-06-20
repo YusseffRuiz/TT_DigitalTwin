@@ -2,7 +2,6 @@
 Author  :: Adan Dominguez (adanydr@outlook.com)
 ================================================= """
 
-import myosuite
 import deprl
 import numpy as np
 import matplotlib.pyplot as plt
@@ -125,7 +124,7 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
         l_plantar_flexion = []
         l_knee_flexion = []
 
-    obs = env.reset()
+    obs, *_ = env.reset()
 
     for ep in range(T):
         if randAction:
@@ -151,7 +150,7 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
             l_knee_flexion.append(position[18])
             # l_plantar_flexion.append(position[12]) # When Ankle movement exist, with Active TP
             # motor_action.append(action[])
-        next_state, reward, done, info = env.step(action)
+        next_state, reward, done, info, extra = env.step(action)
         obs = next_state
     print("Reward: ", reward)
     env.close()
@@ -176,7 +175,7 @@ def multipleRun(env, visual, plotFlag, randAction, policy, totEpisodes):
 
     for ep in range(totEpisodes):
         print(f"Episode: {ep + 1} of {totEpisodes}")
-        obs = env.reset()
+        obs, *_ = env.reset()
         done = False
         while not done:
             if randAction:
@@ -198,7 +197,7 @@ def multipleRun(env, visual, plotFlag, randAction, policy, totEpisodes):
                 l_knee_flexion.append(position[18])
                 # l_plantar_flexion.append(position[12]) # When Ankle movement exist, with Active TP
                 # motor_action.append(action[])
-            next_state, reward, done, info = env.step(action)
+            next_state, reward, done, info, extra = env.step(action)
             obs = next_state
         print("Reward: ", reward)
     env.close()
@@ -215,8 +214,6 @@ def main(env_string, foldername, visual, randAction, plotFlag, sarcFlag, samples
 
     # Initialise environment
     env = gym.make(env_string, reset_type="init")
-    obs = env.reset()
-    action = env.action_space.sample()
 
     if not randAction:
         print(foldername)
@@ -290,13 +287,15 @@ if __name__ == '__main__':
     env_amp_Passive_Stand = 'myoAmpPassiveStand-v0'
     env_amp_challenge = 'myoChallengeAmputeeWalk-v1'
     env_amp_stand = 'myoAmp1DoFStand-v0'  ### Working
+    env_osl = 'myoOSLWalk-v0'
+    env_oslv2 = 'myoLegWalk_OSL-v2'
 
 
     ################################
     ######Selection Begins##########
     ################################
 
-    env_string = env_amp_1DoF
+    env_string = env_oslv2
 
     gymnasiumFlag = False
     verifyModel = False  # flag to analyse model characteristics, no simulation performed
@@ -306,20 +305,20 @@ if __name__ == '__main__':
     # Action to be performed and plot of the muscles and joints
 
     randAction = False  # Just for testing random movements. if true, loads a Checkpoint
-    plotFlag = True  # Enable if we want plots of muscles and joint movements
+    plotFlag = False  # Enable if we want plots of muscles and joint movements
     sarcFlag = False  # Sarcopenia on the model enabled or not
 
     # Behaviour of the simulation #### only one movement for a long time testFlag = True
     # totEpisodes movements: testFlag = False
-    testFlag = True  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
+    testFlag = False  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
     samples = 300  # how many samples do we want to get from the plots, if plotFlag is active
-    totEpisodes = 5
-    timeRunning = 500  # How many seconds simulation run if using testFlag = True
+    totEpisodes = 10
+    timeRunning = 1000  # How many seconds simulation run if using testFlag = True
 
     if gymnasiumFlag:
         import gymnasium as gym
     else:
-        import gym
+        from myosuite.utils import gym
 
     if env_string == 'myoAmpWalk-v0' or env_string == 'myoChallengeAmputeeWalk-v0':
         foldername = amp_foldername
@@ -331,11 +330,15 @@ if __name__ == '__main__':
         foldername = "WalkingChallenge\myoAmp_passive_walking\\"
     elif env_string == "myoAmpPassiveStand-v0":
         foldername = "WalkingChallenge\myoAmp_Passive_Stand\\"
+    elif env_string == "myoOSLWalk-v0":
+        foldername = "WalkingChallenge\myoOSL_Walking\\"
+    elif env_string == "myoLegWalk_OSL-v2":
+        foldername = "WalkingChallenge\myoOSLv2_Walking\\"
     else:
         foldername = healthy_foldername
 
     if verifyModel:
-        env = gym.make(env_string)
+        env = gym.make(env_string, reset_type="random")
         modelCharacteristics(env, importGymnasium=gymnasiumFlag, getNames=namesFlag)
     else:
         failed = True  ## Loop to get graphs if model falls down, repeating until gathering required samples

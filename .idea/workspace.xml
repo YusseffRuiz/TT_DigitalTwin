@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a08608-3c49-4192-a17a-fd6c4d6f5ff9" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WalkingChallenge/SAR_Computation/SAR_tutorial_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WalkingChallenge/SAR_Computation/sar_implementation.py" afterDir="false" />
+    <list default="true" id="55a08608-3c49-4192-a17a-fd6c4d6f5ff9" name="Changes" comment="Commit of the Improved main, graphs corrected with degrees, instead of mujoco movement, saving and reading of SAR algorithm, main with different flags and commentaries. Plot of all required joints, with y values normalised.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WalkingChallenge/SAR_Computation/sar_implementation.py" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/SAR_Computation/sar_implementation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WalkingChallenge/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WalkingChallenge/training_file.json" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/training_file.json" afterDir="false" />
     </list>
@@ -47,18 +45,22 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.Training.executor&quot;: &quot;Run&quot;,
+    &quot;Python.assistance.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sar_implementation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.vec_normalize.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zeive/PycharmProjects/WalkingTP_DigitalTwin/WalkingChallenge/myoAmp_Passive_Stand_1/checkpoints&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/My Drive/Temporal Transfer/Basic_WalkingHDT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -217,6 +219,28 @@
       <workItem from="1716964375295" duration="2730000" />
       <workItem from="1717016250586" duration="6910000" />
       <workItem from="1717088598527" duration="2173000" />
+      <workItem from="1717166151739" duration="151000" />
+      <workItem from="1717189430779" duration="101000" />
+      <workItem from="1717188367614" duration="382000" />
+      <workItem from="1717191104746" duration="98000" />
+      <workItem from="1717451757602" duration="106000" />
+      <workItem from="1717628498317" duration="5943000" />
+      <workItem from="1717694465604" duration="627000" />
+      <workItem from="1717695197283" duration="20657000" />
+      <workItem from="1717739799509" duration="2768000" />
+      <workItem from="1717775019907" duration="52000" />
+      <workItem from="1717783003507" duration="955000" />
+      <workItem from="1717789397344" duration="4318000" />
+      <workItem from="1717833207041" duration="24003000" />
+      <workItem from="1718060510374" duration="120000" />
+      <workItem from="1718086623954" duration="7580000" />
+      <workItem from="1718242612232" duration="69000" />
+      <workItem from="1718309712707" duration="576000" />
+      <workItem from="1718322524694" duration="1531000" />
+      <workItem from="1718337684557" duration="382000" />
+      <workItem from="1718338160403" duration="5689000" />
+      <workItem from="1718416437731" duration="25246000" />
+      <workItem from="1718919046752" duration="1784000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -226,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712780667321</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Commit of the Improved main, graphs corrected with degrees, instead of mujoco movement, saving and reading of SAR algorithm, main with different flags and commentaries. Plot of all required joints, with y values normalised.">
+      <option name="closed" value="true" />
+      <created>1717166290801</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717166290801</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,10 +266,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Commit of the Improved main, graphs corrected with degrees, instead of mujoco movement, saving and reading of SAR algorithm, main with different flags and commentaries. Plot of all required joints, with y values normalised." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit of the Improved main, graphs corrected with degrees, instead of mujoco movement, saving and reading of SAR algorithm, main with different flags and commentaries. Plot of all required joints, with y values normalised." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$Training.coverage" NAME="Training Coverage Results" MODIFIED="1717016262765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$main.coverage" NAME="main Coverage Results" MODIFIED="1717090087476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$assistance.coverage" NAME="assistance Coverage Results" MODIFIED="1718322742519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WalkingChallenge" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$sar_implementation.coverage" NAME="sar_implementation Coverage Results" MODIFIED="1717631934337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WalkingChallenge/SAR_Computation" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$Training.coverage" NAME="Training Coverage Results" MODIFIED="1718857022239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$main.coverage" NAME="main Coverage Results" MODIFIED="1718920440770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$vec_normalize.coverage" NAME="vec_normalize Coverage Results" MODIFIED="1717631925466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/stable_baselines3/common/vec_env" />
   </component>
 </project>

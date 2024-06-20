@@ -11,7 +11,7 @@ def train(env_name, policy_name, timesteps, seed):
     timesteps: int; how long you want to train your policy for
     seed: str (not int); relevant if you want to train multiple policies with the same params
     """
-    env = gym.make(env_name)
+    env = gym.make(env_name, reset_type="random")
     env = Monitor(env)
     env = DummyVecEnv([lambda: env])
     env = VecNormalize(env, norm_obs=True, norm_reward=False, clip_obs=10.)
@@ -217,26 +217,25 @@ def SAR_RL(env_name, policy_name, timesteps, seed, ica, pca, normalizer, phi=.66
 
 
 
-#train('myoAmp1DoFWalk-v0', 'walking_time', 2e6, '0')
+train('myoOSLWalk-v0', 'walking_time_OSL', 2e6, '0')
 
 print("finished training")
 ###Finished training
 
 
-#muscle_data = get_activations(name='walking_time', env_name='myoAmp1DoFWalk-v0', seed='0', episodes=1000)
-#print(muscle_data.shape)
+muscle_data = get_activations(name='walking_time_OSL', env_name='myoOSLWalk-v0', seed='0', episodes=1000)
+print(muscle_data.shape)
 
-#syn_dict = find_synergies(muscle_data, plot=True)
-#print("VAF by N synergies:", syn_dict)
+syn_dict = find_synergies(muscle_data, plot=True)
+print("VAF by N synergies:", syn_dict)
 
-#ica,pca,normalizer = compute_SAR(muscle_data, 20, save=True)
-#save_data_SAR(ica,pca,normalizer)
+ica,pca,normalizer = compute_SAR(muscle_data, 20, save=True)
 ica,pca,normalizer = load_locomotion_SAR()
 
 
 
-video_name = 'walk_play_period_video (2)'
+video_name = 'walk_play_osl'
 #get_animation(name='play_period', env_name='myoLegWalk-v0', seed='0', episodes=5, determ=False, pca=pca, ica=ica, normalizer=normalizer, phi=.66, is_sar=True, syn_nosyn=False)
-get_vid(name='walking_time', env_name='myoAmp1DoFWalk-v0', seed='0', episodes=5, video_name=video_name)
+get_vid(name='walking_time_OSL', env_name='myoOSLWalk-v0', seed='0', episodes=5, video_name=video_name)
 show_video(f"Assets/{video_name}.avi")
 
