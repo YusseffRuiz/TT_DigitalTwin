@@ -7,9 +7,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 import pandas as pd
-
+from experiments import experimentation
 import cv2
 import os
+
 
 
 def modelCharacteristics(env, importGymnasium=False, getNames=False):
@@ -125,6 +126,10 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
         l_knee_flexion = []
 
     obs, *_ = env.reset()
+    exp = experimentation(env)
+    comArray = []
+    velocityArray = []
+
 
     for ep in range(T):
         if randAction:
@@ -132,6 +137,8 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
             action = action * 0
         else:
             action = policy(obs)
+            comArray.append(env.get_com_public())
+            velocityArray.append(env.get_velocity_public()[1])
         if visual:
             env.mj_render()
         if plotFlag:
@@ -152,6 +159,13 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
             # motor_action.append(action[])
         next_state, reward, done, info, extra = env.step(action)
         obs = next_state
+    #velocityDeviation, velError = exp.getVelocityDeviation(velocityArray)
+    displacements, sway_path, comerror = exp.swayCalculation(comArray)
+    exp.plot_graph(displacements, "CoM Deviation", "step", "CoM Deviation", comerror)
+
+    #exp.plot_graph(velocityDeviation, "velocityDeviation", "step", "velocityDeviation", velError)
+    #tot_distance = exp.get_walking_distance(env)
+    #print("Total distance: ", tot_distance, " metres travelled")
     print("Reward: ", reward)
     env.close()
     if plotFlag:
@@ -280,22 +294,28 @@ if __name__ == '__main__':
     env_stairs = 'myoLegStairTerrainWalk-v0'
     env_chase = "myoChallengeChaseTagP1-v1"
     env_challenge = "myoChallengeChaseTagP2-v0"
-    #### Artificial Limb walk 71 actions (70 muscles, 1 motor), 20 DoF.
-    env_amp_2DoF = 'myoAmpWalk-v0'
-    env_amp_1DoF = 'myoAmp1DoFWalk-v0'
-    env_amp_Passive = 'myoAmpPassiveWalk-v0'
-    env_amp_Passive_Stand = 'myoAmpPassiveStand-v0'
-    env_amp_challenge = 'myoChallengeAmputeeWalk-v1'
-    env_amp_stand = 'myoAmp1DoFStand-v0'  ### Working
-    env_osl = 'myoOSLWalk-v0'
-    env_oslv2 = 'myoLegWalk_OSL-v2'
+    #### Artificial Limb walk
+    env_amp_1DoF = 'myoAmp1DoFWalk-v0' # OSLv2 transtibial prosthesis 70 muscles + 1 actuator, 37 DoF, 0 - root, 1:6 tranlation, 7:37 - joints
+    env_amp_stand = 'myoAmp1DoFStanding-v0'  ### Working
+    env_amp_rough = "myoOSLRoughTerrainWalk-v0"
+    env_amp_hilly = 'myoOSLHillyTerrainWalk-v0'
+
+    # OSLv2 Transfemoral movement
+    env_oslv2 = 'myoLegWalk_OSL-v2' # oslv2 transfemodal prosthesis model
+
+
+    env_osl_separated = "OSLChallenge-v0"
+
+
+    ### Run Track 2024
+    env_challenge24 = "myoChallengeRunTrackP1-v0"
 
 
     ################################
     ######Selection Begins##########
     ################################
 
-    env_string = env_oslv2
+    env_string = env_amp_hilly
 
     gymnasiumFlag = False
     verifyModel = False  # flag to analyse model characteristics, no simulation performed
@@ -313,7 +333,7 @@ if __name__ == '__main__':
     testFlag = False  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
     samples = 300  # how many samples do we want to get from the plots, if plotFlag is active
     totEpisodes = 5
-    timeRunning = 1000  # How many seconds simulation run if using testFlag = True
+    timeRunning = 1500  # How many seconds simulation run if using testFlag = True
 
     if gymnasiumFlag:
         import gymnasium as gym
@@ -322,10 +342,10 @@ if __name__ == '__main__':
 
     if env_string == 'myoAmpWalk-v0' or env_string == 'myoChallengeAmputeeWalk-v0':
         foldername = amp_foldername
-    elif env_string == 'myoAmp1DoFWalk-v0':
-        foldername = "WalkingChallenge\myoAmp_walking_2\\"
-    elif env_string == 'myoAmp1DoFStand-v0':
-        foldername = "WalkingChallenge\myoAmp_Stand\\"
+    elif env_string == 'myoAmp1DoFWalk-v0' or env_string == "myoOSLRoughTerrainWalk-v0" or env_string =='myoOSLHillyTerrainWalk-v0':
+        foldername = "WalkingChallenge\myoOSLv2_TT_Walking\\"
+    elif env_string == 'myoAmp1DoFStanding-v0':
+        foldername = "WalkingChallenge\myoOSLv2_TT_Standing\\"
     elif env_string == "myoAmpPassiveWalk-v0":
         foldername = "WalkingChallenge\myoAmp_passive_walking\\"
     elif env_string == "myoAmpPassiveStand-v0":
@@ -334,8 +354,11 @@ if __name__ == '__main__':
         foldername = "WalkingChallenge\myoOSL_Walking\\"
     elif env_string == "myoLegWalk_OSL-v2":
         foldername = "WalkingChallenge\myoOSLv2_Walking\\"
+    elif env_string == "myoChallengeRunTrackP1-v0":
+        foldername = "WalkingChallenge\Challenge_OSL\\"
     else:
         foldername = healthy_foldername
+
 
     if verifyModel:
         env = gym.make(env_string, reset_type="random")

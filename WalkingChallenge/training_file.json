@@ -2,15 +2,15 @@
  "tonic": {
     "header": "import deprl, gym, myosuite",
     "agent": "deprl.custom_agents.dep_factory(3, deprl.custom_mpo_torch.TunedMPO())(replay=deprl.replays.buffers.Buffer(return_steps=3, batch_size=256, steps_between_batches=1000, batch_iterations=30, steps_before_batches=2e5))",
-    "environment": "deprl.environments.Gym('myoLegWalk_OSL-v2', reset_type='init', scaled_actions=False)",
+    "environment": "deprl.environments.Gym('myoOSLHillyTerrainWalk-v0', reset_type='init', scaled_actions=False)",
     "test_environment": null,
-    "trainer": "deprl.custom_trainer.Trainer(steps=int(3e8), epoch_steps=int(2e5), save_steps=int(1e6))",
+    "trainer": "deprl.custom_trainer.Trainer(steps=int(2e8), epoch_steps=int(2e5), save_steps=int(1e6))",
     "before_training": "",
     "after_training": "",
     "parallel": 8,
     "sequential": 8,
     "seed": 0,
-    "name": "myoOSLv2_Walking",
+    "name": "myoOSLv2_TT_Hilly",
     "environment_name": "myoOSLv2",
     "checkpoint": "last",
     "path": ""
