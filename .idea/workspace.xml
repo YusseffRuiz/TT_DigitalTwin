@@ -5,15 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55a08608-3c49-4192-a17a-fd6c4d6f5ff9" name="Changes" comment="Updating Main, adding working environment, adding an initial working motion checkpoint.">
-      <change afterPath="$PROJECT_DIR$/WalkingChallenge/experiments.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/CoMDeviationDisturbance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/CoMDeviationStatic.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/RewardDataHillyWalking.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/RewardDataPlainWalking.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/RewardDataRoughWalking.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/SpeedDeviation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/SpeedDeviationHillyTerrain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/Experiments/SpeedDeviationRoughTerrain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/HIllyTerrainWalk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/HillyPlot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/PlainWalking.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WalkingChallenge/helper/RoughTerrainWalk.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WalkingChallenge/experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/experiments.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WalkingChallenge/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/checkpoints/logger.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/checkpoints/step_300000000.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/checkpoints/time.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/config.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/log.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WalkingChallenge/myoOSLv2_Walking/script.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WalkingChallenge/training_file.json" beforeDir="false" afterPath="$PROJECT_DIR$/WalkingChallenge/training_file.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +38,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/myosuite/envs/myo/myobase/PassiveWalk_V0.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/deprl/__init__.py" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/myosuite/envs/myo/myobase/__init__.py" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/myosuite/envs/myo/myobase/walk_v1.py" root0="SKIP_INSPECTION" />
   </component>
@@ -48,28 +54,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Training.executor": "Run",
-    "Python.assistance.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.sar_implementation.executor": "Run",
-    "Python.vec_normalize.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/zeive/PycharmProjects/WalkingTP_DigitalTwin/WalkingChallenge/myoOSLv2_TT_Hilly",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Training.executor&quot;: &quot;Run&quot;,
+    &quot;Python.assistance.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sar_implementation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.vec_normalize.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zeive/PycharmProjects/WalkingTP_DigitalTwin/WalkingChallenge/helper/Experiments/SpeedDeviationHillyTerrain.png&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\myoOSLv2_TT_Hilly" />
@@ -79,11 +85,11 @@
       <recent name="C:\Users\zeive\anaconda3\envs\myoSuite_ev\Lib\site-packages\myosuite\simhive\myo_sim\TP_Model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\myoOSLv2_TT_Hilly" />
       <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\myoOSLv2_TT_Hilly\checkpoints" />
       <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\helper" />
       <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\SAR_Computation" />
       <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge\SAR_Computation\Assets" />
-      <recent name="C:\Users\zeive\PycharmProjects\WalkingTP_DigitalTwin\WalkingChallenge" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -268,6 +274,8 @@
       <workItem from="1721688906066" duration="8000" />
       <workItem from="1721688956440" duration="38352000" />
       <workItem from="1722119321320" duration="33127000" />
+      <workItem from="1723418428914" duration="6361000" />
+      <workItem from="1723468399607" duration="4932000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -327,8 +335,8 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$assistance.coverage" NAME="assistance Coverage Results" MODIFIED="1718322742519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WalkingChallenge" />
     <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$sar_implementation.coverage" NAME="sar_implementation Coverage Results" MODIFIED="1717631934337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WalkingChallenge/SAR_Computation" />
-    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$Training.coverage" NAME="Training Coverage Results" MODIFIED="1722443957797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$main.coverage" NAME="main Coverage Results" MODIFIED="1722455610087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$Training.coverage" NAME="Training Coverage Results" MODIFIED="1722896634110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$main.coverage" NAME="main Coverage Results" MODIFIED="1723469803242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/WalkingTP_DigitalTwin$vec_normalize.coverage" NAME="vec_normalize Coverage Results" MODIFIED="1717631925466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/anaconda3/envs/myoSuite_ev/Lib/site-packages/stable_baselines3/common/vec_env" />
   </component>
 </project>

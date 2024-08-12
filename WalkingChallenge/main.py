@@ -159,13 +159,14 @@ def oneRun(env, visual, plotFlag, randAction, policy, T):
             # motor_action.append(action[])
         next_state, reward, done, info, extra = env.step(action)
         obs = next_state
-    #velocityDeviation, velError = exp.getVelocityDeviation(velocityArray)
+    velocityDeviation, velError = exp.getVelocityDeviation(velocityArray)
     displacements, sway_path, comerror = exp.swayCalculation(comArray)
-    exp.plot_graph(displacements, "CoM Deviation", "step", "CoM Deviation", comerror)
+    # exp.plot_graph(displacements, "CoM Deviation Error (%)", "step", "CoM Deviation", comerror)
 
-    #exp.plot_graph(velocityDeviation, "velocityDeviation", "step", "velocityDeviation", velError)
-    #tot_distance = exp.get_walking_distance(env)
-    #print("Total distance: ", tot_distance, " metres travelled")
+    exp.plot_graph(velocityDeviation, "velocityDeviation", "step", "velocityDeviation", velError)
+    tot_distance = exp.get_walking_distance(env)
+    print("Total distance: ", tot_distance, " metres travelled at a mean velocity of: ", np.mean(velocityArray[-200:]), " m/s.")
+    print("Target Velocity: ", exp.target_velocity, " m/s.")
     print("Reward: ", reward)
     env.close()
     if plotFlag:
@@ -227,7 +228,7 @@ def main(env_string, foldername, visual, randAction, plotFlag, sarcFlag, samples
         print("Walking with healthy Model")
 
     # Initialise environment
-    env = gym.make(env_string, reset_type="init")
+    env = gym.make(env_string, reset_type="random")
 
     if not randAction:
         print(foldername)
@@ -315,12 +316,12 @@ if __name__ == '__main__':
     ######Selection Begins##########
     ################################
 
-    env_string = env_amp_hilly
+    env_string = env_amp_stand
 
     gymnasiumFlag = False
     verifyModel = False  # flag to analyse model characteristics, no simulation performed
     namesFlag = True # To print names of muscles and DoF
-    visual = True  # Visual mujoco representation
+    visual = True # Visual mujoco representation
 
     # Action to be performed and plot of the muscles and joints
 
@@ -333,7 +334,7 @@ if __name__ == '__main__':
     testFlag = False  # True run once the time specified in timeRunning, False goes for totEpisodes number, resets every time the model fails.
     samples = 300  # how many samples do we want to get from the plots, if plotFlag is active
     totEpisodes = 5
-    timeRunning = 1500  # How many seconds simulation run if using testFlag = True
+    timeRunning = 1000  # How many seconds simulation run if using testFlag = True
 
     if gymnasiumFlag:
         import gymnasium as gym
@@ -343,7 +344,7 @@ if __name__ == '__main__':
     if env_string == 'myoAmpWalk-v0' or env_string == 'myoChallengeAmputeeWalk-v0':
         foldername = amp_foldername
     elif env_string == 'myoAmp1DoFWalk-v0' or env_string == "myoOSLRoughTerrainWalk-v0" or env_string =='myoOSLHillyTerrainWalk-v0':
-        foldername = "WalkingChallenge\myoOSLv2_TT_Walking\\"
+        foldername = "WalkingChallenge\myoOSLv2_TT_Hilly\\"
     elif env_string == 'myoAmp1DoFStanding-v0':
         foldername = "WalkingChallenge\myoOSLv2_TT_Standing\\"
     elif env_string == "myoAmpPassiveWalk-v0":

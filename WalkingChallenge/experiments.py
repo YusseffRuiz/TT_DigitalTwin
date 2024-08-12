@@ -32,10 +32,9 @@ class experimentation():
         velocityDeviations: array deviations from the initial velocity.
         """
 
-        velocity_deviation = np.abs(self.target_velocity - np.array(velocity_array))*10
-
-        error = np.mean(velocity_deviation/(self.target_velocity*10)) * 100  ## Both values are multiply per 10 to have it in m/s
-
+        velocity_deviation = np.abs(self.target_velocity - np.array(velocity_array))
+        error_1 = (np.abs(np.mean(np.array(velocity_array[-200:])) - self.target_velocity))/self.target_velocity
+        error = error_1 * 100
         return velocity_deviation, error
 
     def get_walking_distance(self, env):
@@ -102,6 +101,7 @@ class experimentation():
             plt.title(f"{title} (Error: {error:.2f}%)")
         else:
             plt.title(title)
+        #plt.ylim(0, 5)  # Set y-axis limits from 0 to 100%
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.show()
